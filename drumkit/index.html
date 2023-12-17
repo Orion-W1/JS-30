@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Drum Kit</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="https://fav.farm/✅">
+    <link rel="icon" href="drumsIcon.svg">
 </head>
 <body>
     <div class="keys">
@@ -62,24 +61,27 @@
     <script>
 
 
-        function playSound(e) { //event listener listen for pressed keys and triggers the funtion
-            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-            if (!audio) return; //stops the function if the key pressed down not have an audio assigned to it
-            audio.currentTime = 0; // rewinds audion to the beginning
-            audio.play(); // plays audio files
-            key.classList.add('playing');
-        }
-
         function removeTransition(e) {
             if (e.propertyName !== 'transform') return;
             this.classList.remove('playing');
         }
 
-        const keys = document.querySelectorAll('.key');
+
+        function playSound(e) { //event listener listen for pressed keys and triggers the funtion
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+            if (!audio) return; //stops the function if the key pressed down not have an audio assigned to it
+            
+            key.classList.add('playing');
+            audio.currentTime = 0; // rewinds audion to the beginning
+            audio.play(); // plays audio files
+        }
+
+
+
+        const keys = Array.from(document.querySelectorAll('.key'));
         keys.forEach(key => key.addEventListener('transitionend', removeTransition));
         window.addEventListener('keydown', playSound);
-
     </script>
 </body>
 </html>
